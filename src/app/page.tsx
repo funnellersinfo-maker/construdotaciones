@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion";
-import { useRef, useState, useEffect, Suspense, useCallback } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import {
   Shield,
   Shirt,
@@ -398,13 +398,14 @@ function HeroSection() {
 
         {/* WhatsApp float button */}
         <motion.a
-          href="https://wa.me/573244669026"
+          href="https://wa.me/573244669026?text=Hola%20CONSTRUDOTACIONES%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20servicios"
           target="_blank"
           rel="noopener noreferrer"
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1.5, type: "spring", stiffness: 200 }}
           className="inline-flex items-center gap-2 mt-10 px-6 py-3 bg-green-600 hover:bg-green-500 text-white rounded-full font-semibold text-sm transition-colors shadow-lg shadow-green-600/30"
+          aria-label="Contactar por WhatsApp"
         >
           <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
@@ -779,10 +780,11 @@ function CatalogSection() {
                     <ExternalLink className="w-4 h-4" />
                   </a>
                   <a
-                    href="https://wa.me/573244669026"
+                    href="https://wa.me/573244669026?text=Hola%2C%20quiero%20solicitar%20el%20cat%C3%A1logo%20de%20CONSTRUDOTACIONES"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-border rounded-full font-bold text-sm hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
+                    aria-label="Solicitar catálogo por WhatsApp"
                   >
                     <svg viewBox="0 0 24 24" className="w-4 h-4 fill-green-500">
                       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
@@ -814,16 +816,15 @@ function ContactSection() {
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
-      setSending(true);
-      // Simulate sending
-      setTimeout(() => {
-        setSending(false);
-        setSent(true);
-        setTimeout(() => setSent(false), 3000);
-        setFormState({ nombre: "", telefono: "", correo: "", mensaje: "" });
-      }, 1500);
+      const msg = encodeURIComponent(
+        `Hola CONSTRUDOTACIONES. Soy ${formState.nombre}.\nTeléfono: ${formState.telefono}\nCorreo: ${formState.correo}\nMensaje: ${formState.mensaje}`
+      );
+      window.open(`https://wa.me/573244669026?text=${msg}`, "_blank");
+      setSent(true);
+      setTimeout(() => setSent(false), 3000);
+      setFormState({ nombre: "", telefono: "", correo: "", mensaje: "" });
     },
-    []
+    [formState]
   );
 
   return (
@@ -978,12 +979,7 @@ function ContactSection() {
                 disabled={sending}
                 className="w-full py-3 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-primary/25"
               >
-                {sending ? (
-                  <span className="flex items-center gap-2">
-                    <span className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                    Enviando...
-                  </span>
-                ) : sent ? (
+                {sent ? (
                   <span className="flex items-center gap-2">
                     <span className="w-4 h-4 rounded-full bg-green-400" />
                     Mensaje Enviado
@@ -1083,7 +1079,7 @@ function Footer() {
               </li>
               <li className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Mail className="w-4 h-4 text-primary shrink-0" />
-                info@construdotaciones.com
+                <a href="mailto:info@construdotaciones.com" className="hover:text-primary transition-colors break-all"><span className="break-all">info@construdotaciones.com</span></a>
               </li>
               <li className="flex items-start gap-2 text-sm text-muted-foreground">
                 <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />
@@ -1169,11 +1165,11 @@ function WhatsAppFloat() {
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0 }}
-          href="https://wa.me/573244669026"
+          href="https://wa.me/573244669026?text=Hola%20CONSTRUDOTACIONES%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20servicios"
           target="_blank"
           rel="noopener noreferrer"
           className="fixed bottom-6 left-6 z-40 flex items-center gap-2 px-4 py-3 bg-green-600 hover:bg-green-500 text-white rounded-full shadow-lg shadow-green-600/30 transition-colors group"
-          aria-label="WhatsApp"
+          aria-label="Contactar por WhatsApp"
         >
           <span className="absolute inset-0 rounded-full bg-green-400 animate-pulse-ring opacity-30" />
           <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current relative z-10">
@@ -1183,6 +1179,88 @@ function WhatsAppFloat() {
         </motion.a>
       )}
     </AnimatePresence>
+  );
+}
+
+/* ─────────────────── FAQ Section ──────────────────── */
+
+const FAQ_ITEMS = [
+  {
+    q: "¿Hacen envíos a toda Colombia?",
+    a: "Sí, realizamos envíos a todos los departamentos de Colombia con servicio rápido y confiable. Contáctenos por WhatsApp para cotizar el envío a su ciudad.",
+  },
+  {
+    q: "¿Cuál es el tiempo de entrega?",
+    a: "El tiempo de entrega varía según la ciudad de destino. Para Cartagena y Barranquilla, el envío puede ser el mismo día o siguiente. Para otras ciudades, entre 2 y 5 días hábiles.",
+  },
+  {
+    q: "¿Ofrecen precios por mayor?",
+    a: "Sí, manejamos precios especiales para compras al por mayor. Contáctenos directamente por WhatsApp o teléfono para recibir una cotización personalizada.",
+  },
+  {
+    q: "¿Los extintores incluyen certificación?",
+    a: "Sí, todos nuestros extintores cuentan con las certificaciones vigentes requeridas por la normativa colombiana. Además ofrecemos servicio de mantenimiento y recarga.",
+  },
+  {
+    q: "¿Pueden personalizar las dotaciones con bordado?",
+    a: "Por supuesto. Ofrecemos servicio de bordado y estampado personalizado para todas nuestras prendas. Puede incluir el logo de su empresa, nombre del trabajador, etc.",
+  },
+  {
+    q: "¿Cuáles son los métodos de pago?",
+    a: "Aceptamos transferencias bancarias, consignaciones, efectivo y pago contra entrega en algunas ciudades. Contáctenos para conocer las opciones disponibles.",
+  },
+];
+
+function FAQSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  return (
+    <section id="faq" className="relative py-24 sm:py-32 overflow-hidden">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <RevealSection className="text-center mb-12">
+          <Badge variant="outline" className="mb-4 border-primary/30 text-primary">FAQ</Badge>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight mb-4">
+            Preguntas <span className="gradient-text-amber">Frecuentes</span>
+          </h2>
+        </RevealSection>
+        <div className="space-y-3">
+          {FAQ_ITEMS.map((item, i) => (
+            <RevealSection key={i} delay={i * 0.08}>
+              <div className="rounded-2xl border border-border/30 bg-card overflow-hidden">
+                <button
+                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                  className="w-full flex items-center justify-between p-5 text-left hover:bg-secondary/30 transition-colors"
+                  aria-expanded={openIndex === i}
+                  aria-label={item.q}
+                >
+                  <span className="font-semibold text-sm pr-4">{item.q}</span>
+                  <motion.span
+                    animate={{ rotate: openIndex === i ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="shrink-0 text-primary"
+                  >
+                    <ChevronDown className="w-5 h-5" />
+                  </motion.span>
+                </button>
+                <AnimatePresence initial={false}>
+                  {openIndex === i && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      className="overflow-hidden"
+                    >
+                      <p className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed">{item.a}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </RevealSection>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -1199,6 +1277,7 @@ export default function Home() {
       <WhyChooseSection />
       <CatalogSection />
       <ContactSection />
+      <FAQSection />
       <Footer />
       <ScrollToTop />
       <WhatsAppFloat />
