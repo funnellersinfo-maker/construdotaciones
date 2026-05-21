@@ -30,3 +30,38 @@ Stage Summary:
 - Enhanced with dopaminic animations, parallax effects, and cinematic design
 - Mobile responsive, accessible, and production-ready
 - Dev server running on port 3000, page returns 200 OK
+---
+Task ID: 2b
+Agent: full-stack-developer
+Task: Add Meta Pixel to layout.tsx
+
+Work Log:
+- Read layout.tsx
+- Added Meta Pixel code using next/script with afterInteractive strategy
+- Pixel ID: 1186956072190174
+
+Stage Summary:
+- Meta Pixel added to layout.tsx
+- Uses next/script for SSR-safe injection
+---
+Task ID: 2
+Agent: full-stack-developer
+Task: Update page.tsx with new contact info, WhatsApp links, viewer counter, exit popup
+
+Work Log:
+- Read current page.tsx (1287 lines)
+- Updated all phone numbers from 324-466-9026 to 302-565-8351 (display + tel: links)
+- Changed WhatsApp CTA buttons (Hero, Catalog, Footer floating) to https://wa.link/fyej5y
+- Changed form WhatsApp handler to wa.me/573025658351 with professional pre-designed message
+- Updated email from info@construdotaciones.com to construdotaciones2023@gmail.com (display + mailto:)
+- Added LiveViewers component (fake counter 50-239 range, updates every 5-15s, smooth animation)
+- Added ExitIntentPopup component (4min inactivity timer + desktop exit-intent mouse detection)
+- Added Eye icon to lucide-react imports
+- Placed LiveViewers before Footer and ExitIntentPopup after WhatsAppFloat in Home export
+- Verified 0 instances of old data remain, 14 instances of new data present
+- Lint passes cleanly, dev server returns 200 OK
+
+Stage Summary:
+- page.tsx fully updated with all requested changes
+- No API routes referenced in client code
+- All existing sections, animations, and styles preserved

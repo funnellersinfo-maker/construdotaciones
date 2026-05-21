@@ -24,6 +24,7 @@ import {
   ExternalLink,
   Star,
   HardHat,
+  Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -388,17 +389,17 @@ function HeroSection() {
             <div className="absolute inset-0 bg-gradient-to-r from-primary via-amber-500 to-primary animate-shimmer" />
           </a>
           <a
-            href="tel:+573244669026"
+            href="tel:+573025658351"
             className="group px-8 py-4 border border-border rounded-full font-bold text-sm hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 flex items-center gap-2"
           >
             <Phone className="w-4 h-4 text-primary" />
-            (+57) 324-466-9026
+            (+57) 302-565-8351
           </a>
         </motion.div>
 
         {/* WhatsApp float button */}
         <motion.a
-          href="https://wa.me/573244669026?text=Hola%20CONSTRUDOTACIONES%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20servicios"
+          href="https://wa.link/fyej5y"
           target="_blank"
           rel="noopener noreferrer"
           initial={{ opacity: 0, scale: 0 }}
@@ -780,7 +781,7 @@ function CatalogSection() {
                     <ExternalLink className="w-4 h-4" />
                   </a>
                   <a
-                    href="https://wa.me/573244669026?text=Hola%2C%20quiero%20solicitar%20el%20cat%C3%A1logo%20de%20CONSTRUDOTACIONES"
+                    href="https://wa.link/fyej5y"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-border rounded-full font-bold text-sm hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
@@ -817,9 +818,9 @@ function ContactSection() {
     (e: React.FormEvent) => {
       e.preventDefault();
       const msg = encodeURIComponent(
-        `Hola CONSTRUDOTACIONES. Soy ${formState.nombre}.\nTeléfono: ${formState.telefono}\nCorreo: ${formState.correo}\nMensaje: ${formState.mensaje}`
+        `🏢 *NUEVO CONTACTO - CONSTRUDOTACIONES*\n👤 Nombre: ${formState.nombre}\n📞 Teléfono: ${formState.telefono}\n📧 Correo: ${formState.correo}\n💬 Mensaje: ${formState.mensaje}\n---\nEnviado desde el sitio web CONSTRUDOTACIONES`
       );
-      window.open(`https://wa.me/573244669026?text=${msg}`, "_blank");
+      window.open(`https://wa.me/573025658351?text=${msg}`, "_blank");
       setSent(true);
       setTimeout(() => setSent(false), 3000);
       setFormState({ nombre: "", telefono: "", correo: "", mensaje: "" });
@@ -853,14 +854,14 @@ function ContactSection() {
                 {
                   icon: Phone,
                   title: "Teléfonos",
-                  lines: ["(+57) 324-466-9026", "(+57) 315-480-5893"],
-                  href: "tel:+573244669026",
+                  lines: ["(+57) 302-565-8351", "(+57) 315-480-5893"],
+                  href: "tel:+573025658351",
                 },
                 {
                   icon: Mail,
                   title: "Correo Electrónico",
-                  lines: ["info@construdotaciones.com"],
-                  href: "mailto:info@construdotaciones.com",
+                  lines: ["construdotaciones2023@gmail.com"],
+                  href: "mailto:construdotaciones2023@gmail.com",
                 },
                 {
                   icon: MapPin,
@@ -1073,13 +1074,13 @@ function Footer() {
               <li className="flex items-start gap-2 text-sm text-muted-foreground">
                 <Phone className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <p>(+57) 324-466-9026</p>
+                  <p>(+57) 302-565-8351</p>
                   <p>(+57) 315-480-5893</p>
                 </div>
               </li>
               <li className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Mail className="w-4 h-4 text-primary shrink-0" />
-                <a href="mailto:info@construdotaciones.com" className="hover:text-primary transition-colors break-all"><span className="break-all">info@construdotaciones.com</span></a>
+                <a href="mailto:construdotaciones2023@gmail.com" className="hover:text-primary transition-colors break-all"><span className="break-all">construdotaciones2023@gmail.com</span></a>
               </li>
               <li className="flex items-start gap-2 text-sm text-muted-foreground">
                 <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />
@@ -1165,7 +1166,7 @@ function WhatsAppFloat() {
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0 }}
-          href="https://wa.me/573244669026?text=Hola%20CONSTRUDOTACIONES%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20servicios"
+          href="https://wa.link/fyej5y"
           target="_blank"
           rel="noopener noreferrer"
           className="fixed bottom-6 left-6 z-40 flex items-center gap-2 px-4 py-3 bg-green-600 hover:bg-green-500 text-white rounded-full shadow-lg shadow-green-600/30 transition-colors group"
@@ -1264,6 +1265,187 @@ function FAQSection() {
   );
 }
 
+/* ─────────────── Live Viewers Counter ──────────────── */
+
+function LiveViewers() {
+  const [viewers, setViewers] = useState(() => Math.floor(Math.random() * 190) + 50);
+  const [direction, setDirection] = useState<"up" | "down">("up");
+
+  useEffect(() => {
+    const update = () => {
+      const change = Math.floor(Math.random() * 15) + 1;
+      setDirection((prev) => (Math.random() > 0.4 ? prev : prev === "up" ? "down" : "up"));
+      setViewers((prev) => {
+        const next = direction === "up" ? prev + change : prev - change;
+        return Math.max(50, Math.min(239, next));
+      });
+      const nextDelay = Math.floor(Math.random() * 10000) + 5000;
+      timerRef = setTimeout(update, nextDelay);
+    };
+
+    let timerRef = setTimeout(update, Math.floor(Math.random() * 10000) + 5000);
+    return () => clearTimeout(timerRef);
+  }, [direction]);
+
+  return (
+    <div className="relative border-t border-border/30 bg-gradient-to-r from-background via-secondary/20 to-background py-3">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-center gap-3">
+          <span className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" />
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-600" />
+          </span>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Eye className="w-4 h-4 text-red-500" />
+            <span>
+              <motion.span
+                key={viewers}
+                initial={{ opacity: 0, y: direction === "up" ? 8 : -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="inline-block font-bold text-foreground tabular-nums"
+              >
+                {viewers}
+              </motion.span>
+              {" "}personas están viendo este sitio ahora
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────── Exit Intent Popup ──────────────── */
+
+function ExitIntentPopup() {
+  const [show, setShow] = useState(false);
+  const hasShown = useRef(false);
+  const inactiveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastActivity = useRef(Date.now());
+
+  const resetInactivityTimer = useCallback(() => {
+    lastActivity.current = Date.now();
+    if (inactiveTimer.current) clearTimeout(inactiveTimer.current);
+    if (hasShown.current) return;
+    inactiveTimer.current = setTimeout(() => {
+      hasShown.current = true;
+      setShow(true);
+    }, 240000); // 4 minutes
+  }, []);
+
+  useEffect(() => {
+    if (hasShown.current) return;
+
+    // Inactivity detection
+    const events = ["mousemove", "keydown", "scroll", "touchstart"] as const;
+    const handlers = events.map((event) => {
+      const handler = () => resetInactivityTimer();
+      window.addEventListener(event, handler, { passive: true });
+      return { event, handler };
+    });
+    resetInactivityTimer();
+
+    // Exit intent (mouse leaving top of viewport on desktop)
+    const mouseHandler = (e: MouseEvent) => {
+      if (hasShown.current) return;
+      if (e.clientY <= 10 && e.clientX >= 0) {
+        hasShown.current = true;
+        setShow(true);
+      }
+    };
+    window.addEventListener("mouseout", mouseHandler);
+
+    return () => {
+      handlers.forEach(({ event, handler }) => window.removeEventListener(event, handler));
+      window.removeEventListener("mouseout", mouseHandler);
+      if (inactiveTimer.current) clearTimeout(inactiveTimer.current);
+    };
+  }, [resetInactivityTimer]);
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+        >
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setShow(false)}
+          />
+
+          {/* Popup */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.85, y: 30 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="relative w-full max-w-md rounded-3xl overflow-hidden border border-border/30 shadow-2xl shadow-black/50"
+          >
+            {/* Glassmorphism card */}
+            <div className="relative bg-card/90 backdrop-blur-2xl p-8 text-center">
+              {/* Glow decoration */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
+
+              {/* Close button */}
+              <button
+                onClick={() => setShow(false)}
+                className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground"
+                aria-label="Cerrar"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Content */}
+              <div className="relative z-10">
+                <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center shadow-lg shadow-green-500/30">
+                  <svg viewBox="0 0 24 24" className="w-8 h-8 fill-white">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                  </svg>
+                </div>
+
+                <h3 className="text-xl sm:text-2xl font-black tracking-tight mb-3">
+                  ¿Necesita <span className="gradient-text-amber">asesoría</span>?
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                  Nuestro equipo está listo para atenderle. ¡Contáctenos ahora por WhatsApp y reciba atención personalizada al instante!
+                </p>
+
+                <a
+                  href="https://wa.link/fyej5y"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-green-600 hover:bg-green-500 text-white rounded-full font-bold text-sm transition-all duration-300 shadow-lg shadow-green-600/30 hover:shadow-xl hover:shadow-green-500/40 hover:scale-105"
+                >
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                  </svg>
+                  Contáctenos por WhatsApp
+                </a>
+
+                <button
+                  onClick={() => setShow(false)}
+                  className="block mx-auto mt-4 text-xs text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2"
+                >
+                  No, gracias
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
 /* ═══════════════════════ MAIN PAGE ═══════════════════════ */
 
 export default function Home() {
@@ -1278,9 +1460,11 @@ export default function Home() {
       <CatalogSection />
       <ContactSection />
       <FAQSection />
+      <LiveViewers />
       <Footer />
       <ScrollToTop />
       <WhatsAppFloat />
+      <ExitIntentPopup />
     </main>
   );
 }
