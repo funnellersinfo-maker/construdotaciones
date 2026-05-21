@@ -1150,10 +1150,14 @@ function ScrollToTop() {
   );
 }
 
-/* ─────────────────── WhatsApp floating ──────────────────── */
+/* ─────────────────── Promo Hook + WhatsApp ──────────────────── */
 
-function WhatsAppFloat() {
+function PromoHook() {
   const [visible, setVisible] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [imgIndex, setImgIndex] = useState(0);
+  const [closed, setClosed] = useState(false);
+  const [timeLeft, setTimeLeft] = useState({ h: 23, m: 59, s: 59 });
 
   useEffect(() => {
     const handler = () => setVisible(window.scrollY > 300);
@@ -1161,25 +1165,199 @@ function WhatsAppFloat() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
+  // Countdown timer
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        let { h, m, s } = prev;
+        s--;
+        if (s < 0) { s = 59; m--; }
+        if (m < 0) { m = 59; h--; }
+        if (h < 0) { h = 23; m = 59; s = 59; }
+        return { h, m, s };
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Auto-cycle images
+  useEffect(() => {
+    if (!expanded) return;
+    const timer = setInterval(() => setImgIndex((i) => (i + 1) % 2), 3000);
+    return () => clearInterval(timer);
+  }, [expanded]);
+
+  if (closed) return null;
+
+  const pad = (n: number) => String(n).padStart(2, "0");
+
   return (
     <AnimatePresence>
       {visible && (
-        <motion.a
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0 }}
-          href="https://wa.link/fyej5y"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="fixed bottom-6 left-6 z-40 flex items-center gap-2 px-4 py-3 bg-green-600 hover:bg-green-500 text-white rounded-full shadow-lg shadow-green-600/30 transition-colors group"
-          aria-label="Contactar por WhatsApp"
-        >
-          <span className="absolute inset-0 rounded-full bg-green-400 animate-pulse-ring opacity-30" />
-          <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current relative z-10">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-          </svg>
-          <span className="relative z-10 text-xs font-semibold hidden sm:inline">WhatsApp</span>
-        </motion.a>
+        <>
+          {/* Expanded promo card */}
+          <AnimatePresence>
+            {expanded && (
+              <motion.div
+                initial={{ opacity: 0, y: 80, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 80, scale: 0.9 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                className="fixed bottom-6 left-6 z-50 w-[340px] sm:w-[380px] rounded-2xl overflow-hidden border border-primary/30 shadow-2xl shadow-black/50"
+                style={{ background: "linear-gradient(145deg, oklch(0.14 0.02 60), oklch(0.10 0.01 280))" }}
+              >
+                {/* Header bar */}
+                <div className="relative px-4 pt-3 pb-2 flex items-center justify-between" style={{ background: "linear-gradient(90deg, oklch(0.75 0.18 65), oklch(0.65 0.15 45))" }}>
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">🔥</span>
+                    <span className="text-xs font-black text-primary-foreground uppercase tracking-wider">Oferta Especial</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[10px] font-bold text-primary-foreground/80 bg-primary-foreground/20 px-2 py-0.5 rounded-full">
+                      ⏰ {pad(timeLeft.h)}:{pad(timeLeft.m)}:{pad(timeLeft.s)}
+                    </span>
+                    <button
+                      onClick={() => setExpanded(false)}
+                      className="w-6 h-6 rounded-full bg-primary-foreground/20 hover:bg-primary-foreground/40 flex items-center justify-center transition-colors"
+                      aria-label="Cerrar promo"
+                    >
+                      <X className="w-3 h-3 text-primary-foreground" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Image carousel */}
+                <div className="relative h-48 overflow-hidden">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={imgIndex}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className="absolute inset-0"
+                    >
+                      <div
+                        className="absolute inset-0 bg-cover bg-center"
+                        style={{ backgroundImage: `url('/images/promo-jean-${imgIndex + 1}.jpg')` }}
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  {/* Price badge */}
+                  <div className="absolute top-3 right-3 px-3 py-1.5 rounded-xl bg-red-600 shadow-lg">
+                    <span className="text-[10px] font-bold text-white line-through block">$40.000</span>
+                    <span className="text-base font-black text-white">$35.000</span>
+                    <span className="text-[9px] text-red-100 block">c/u x2 unidades</span>
+                  </div>
+                  {/* Image dots */}
+                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                    {[0, 1].map((i) => (
+                      <button
+                        key={i}
+                        onClick={() => setImgIndex(i)}
+                        className={`w-2 h-2 rounded-full transition-all duration-300 ${i === imgIndex ? "bg-primary w-5" : "bg-white/40"}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-4 space-y-3">
+                  <div>
+                    <h3 className="text-base font-black text-foreground leading-tight">
+                      JEAN STRETCH INDUSTRIAL 👖💪
+                    </h3>
+                    <p className="text-[11px] text-muted-foreground mt-1">
+                      Diseñado para gente que trabaja duro de verdad 👷🏻‍♂️🛵🏗️
+                    </p>
+                  </div>
+
+                  {/* Features */}
+                  <div className="grid grid-cols-2 gap-1.5">
+                    {["Tela stretch flexible", "No talla entrepierna", "Triple costura", "Fresco al calor ☀️"].map((f) => (
+                      <div key={f} className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+                        <span className="w-3.5 h-3.5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0">
+                          <span className="text-green-400 text-[8px]">✓</span>
+                        </span>
+                        {f}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Promo banner */}
+                  <div className="relative px-3 py-2.5 rounded-xl overflow-hidden" style={{ background: "linear-gradient(135deg, oklch(0.75 0.18 65), oklch(0.65 0.2 45))" }}>
+                    <div className="absolute inset-0 animate-shimmer opacity-30" />
+                    <div className="relative flex items-center justify-between">
+                      <div>
+                        <span className="text-[10px] font-bold text-primary-foreground/80 block">PROMO 2x1</span>
+                        <span className="text-lg font-black text-primary-foreground leading-none">$70.000</span>
+                        <span className="text-[10px] text-primary-foreground/70 block">los 2 jeans</span>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-2xl">🔥</span>
+                        <span className="text-[10px] font-bold text-primary-foreground block">Ahorra $10.000</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CTA */}
+                  <a
+                    href="https://wa.link/fyej5y"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full py-3 bg-green-600 hover:bg-green-500 text-white rounded-xl font-bold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-green-600/30 active:scale-[0.98]"
+                    aria-label="Pedir jean stretch por WhatsApp"
+                  >
+                    <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
+                    ¡Lo quiero! Escríbenos
+                  </a>
+
+                  <p className="text-[9px] text-center text-muted-foreground/50">
+                    📍 Cartagena · 🚚 Envíos a toda Colombia
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Collapsed hook button */}
+          {!expanded && (
+            <motion.button
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setExpanded(true)}
+              className="fixed bottom-6 left-6 z-40 group"
+              aria-label="Ver oferta especial"
+            >
+              <div className="relative flex items-center gap-2.5 pl-4 pr-5 py-3 rounded-full shadow-2xl shadow-green-600/30 overflow-hidden" style={{ background: "linear-gradient(135deg, #16a34a, #15803d)" }}>
+                {/* Pulse ring */}
+                <span className="absolute inset-0 rounded-full bg-green-400/30 animate-pulse-ring" />
+                {/* Shimmer */}
+                <div className="absolute inset-0 animate-shimmer opacity-40" />
+                <span className="relative text-xl">🔥</span>
+                <div className="relative flex flex-col">
+                  <span className="text-[10px] font-bold text-green-100 leading-none">JEAN STRETCH</span>
+                  <span className="text-xs font-black text-white leading-tight">2x $70.000</span>
+                </div>
+                <span className="relative text-green-200 group-hover:translate-x-0.5 transition-transform">→</span>
+              </div>
+              {/* Close button */}
+              <button
+                onClick={(e) => { e.stopPropagation(); setClosed(true); }}
+                className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-secondary border border-border flex items-center justify-center hover:bg-destructive transition-colors"
+                aria-label="Cerrar hook"
+              >
+                <X className="w-2.5 h-2.5" />
+              </button>
+            </motion.button>
+          )}
+        </>
       )}
     </AnimatePresence>
   );
@@ -1465,7 +1643,7 @@ export default function Home() {
       <LiveViewers />
       <Footer />
       <ScrollToTop />
-      <WhatsAppFloat />
+      <PromoHook />
       <ExitIntentPopup />
     </main>
   );
